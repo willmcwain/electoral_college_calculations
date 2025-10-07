@@ -82,19 +82,19 @@ def build_turnout_from_pandas(csv_path, year):
 
     return data
 
-voting_turnout_2024 = build_turnout_from_pandas('/Users/willmcwain/Downloads/countypres_2000-2024.csv', 2024)
+voting_turnout_2024 = build_turnout_from_pandas('data/countypres_2000-2024.csv', 2024)
 
-voting_turnout_2020 = build_turnout_from_pandas('/Users/willmcwain/Downloads/countypres_2000-2024.csv', 2020)
+voting_turnout_2020 = build_turnout_from_pandas('data/countypres_2000-2024.csv', 2020)
 
-voting_turnout_2016 = build_turnout_from_pandas('/Users/willmcwain/Downloads/countypres_2000-2024.csv', 2016)
+voting_turnout_2016 = build_turnout_from_pandas('data/countypres_2000-2024.csv', 2016)
 
-voting_turnout_2012 = build_turnout_from_pandas('/Users/willmcwain/Downloads/countypres_2000-2024.csv', 2012)
+voting_turnout_2012 = build_turnout_from_pandas('data/countypres_2000-2024.csv', 2012)
 
-voting_turnout_2008 = build_turnout_from_pandas('/Users/willmcwain/Downloads/countypres_2000-2024.csv', 2008)
+voting_turnout_2008 = build_turnout_from_pandas('data/countypres_2000-2024.csv', 2008)
 
-voting_turnout_2004 = build_turnout_from_pandas('/Users/willmcwain/Downloads/countypres_2000-2024.csv', 2004)
+voting_turnout_2004 = build_turnout_from_pandas('data/countypres_2000-2024.csv', 2004)
 
-voting_turnout_2000 = build_turnout_from_pandas('/Users/willmcwain/Downloads/countypres_2000-2024.csv', 2000)
+voting_turnout_2000 = build_turnout_from_pandas('data/countypres_2000-2024.csv', 2000)
 
 total_electors = 538
 floor = 1

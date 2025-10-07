@@ -11,6 +11,10 @@ import math
 from collections import Counter, defaultdict
 import pandas as pd
 
+# Define constants
+TOTAL_ELECTORS = 538
+FLOOR = 1
+
 def build_turnout_from_pandas(csv_path, year):
     # Read the entire MIT county-level dataset
     df = pd.read_csv(csv_path)
@@ -96,12 +100,26 @@ voting_turnout_2004 = build_turnout_from_pandas('data/countypres_2000-2024.csv',
 
 voting_turnout_2000 = build_turnout_from_pandas('data/countypres_2000-2024.csv', 2000)
 
-total_electors = 538
-floor = 1
+voting_turnout = {
+    2024: voting_turnout_2024,
+    2020: voting_turnout_2020,
+    2016: voting_turnout_2016,
+    2012: voting_turnout_2012,
+    2008: voting_turnout_2008,
+    2004: voting_turnout_2004,
+    2000: voting_turnout_2000
+}
+
+# Set election year here (2000 - 2024)
+election_year = 2000
+
+
+df = voting_turnout[election_year]
+
 national_totals = Counter()
 # Calculate national totals first
 national_raw_totals = Counter()
-for state_data in voting_turnout_2000.values():
+for state_data in df.values():
     for cand, votes in state_data.items():
         if cand != 'Total':
             national_raw_totals[cand] += votes
@@ -115,9 +133,9 @@ eligible_candidates = {
 
 print("Eligible candidates:", eligible_candidates)
 
-electors = {state: floor for state in voting_turnout_2000}
+electors = {state: FLOOR for state in df}
 
-remaining_electors = total_electors - sum(electors.values())
+remaining_electors = TOTAL_ELECTORS - sum(electors.values())
 
 def priority(votes, n):
     if n == 0:
@@ -128,7 +146,7 @@ def sl_priority(votes, n):
     return votes / (2 * n + 1)
 
 for _ in range(remaining_electors):
-    state_priorities = {state: priority(voting_turnout_2000[state]['Total'], electors[state]) for state in electors}
+    state_priorities = {state: priority(df[state]['Total'], electors[state]) for state in electors}
     next_state = max(state_priorities, key=state_priorities.get)
     electors[next_state] += 1
 
@@ -153,7 +171,7 @@ def apportion_within_state(vote_dict, electors, eligible):
 final_allocation = {}
 
 for state, num_electors in electors.items():
-    state_votes = voting_turnout_2000[state]
+    state_votes = df[state]
     final_allocation[state] = apportion_within_state(state_votes, num_electors, eligible_candidates)
 
 for state, allocation in final_allocation.items():
